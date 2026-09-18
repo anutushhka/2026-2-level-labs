@@ -55,6 +55,27 @@ def remove_stop_words(tokens: Sequence[str], stop_words: Sequence[str]) -> Seque
         Sequence[str] | None: Sequence of tokens without stop words.
         Returns None in case of incorrect input types.
     """
+    if not isinstance(tokens, str):
+        return None
+    if not isinstance(stop_words, str):
+        return tokens
+    for token in tokens:
+        if not isinstance(token, str):
+            return None
+    for stop_word in stop_words:
+        if not isinstance(stop_word, str):
+            return None
+
+    result = []
+
+    for token in tokens:
+        if token not in stop_words:
+            result.append(token)
+    return result
+
+
+
+
 
 
 
