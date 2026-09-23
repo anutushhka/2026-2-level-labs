@@ -34,7 +34,6 @@ def tokenize(text: str) -> Sequence[str] | None:
 
     for word in words:
         new_word = ""
-
         for symbol in word:
             if symbol.isalpha():
                 new_word += symbol.lower()
@@ -83,10 +82,8 @@ def calculate_frequencies(tokens: Sequence[str]) -> dict[str, float] | None:
     """
     if not isinstance(tokens, Sequence):
         return None
-
     if not all(isinstance(token, str) for token in tokens):
         return None
-
     if not tokens:
         return None
 
@@ -247,18 +244,13 @@ def compare_profiles_by_top_n(
     unknown_top_n = get_top_n_words(unknown_freq, top_n)
     compare_top_n = get_top_n_words(compare_freq, top_n)
 
-    if unknown_top_n is None or compare_top_n is None:
-        return None
-
     unknown_set = set(unknown_top_n)
     compare_set = set(compare_top_n)
-    intersection = unknown_set & compare_set
 
     if len(unknown_top_n) == 0:
         return 0.0
 
-    distance = len(intersection) / len(unknown_top_n)
-
+    distance = len(unknown_set & compare_set) / len(unknown_top_n)
     return distance
 
 
