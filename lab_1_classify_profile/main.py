@@ -85,18 +85,18 @@ def calculate_frequencies(tokens: Sequence[str]) -> dict[str, float] | None:
     ):
         return None
 
-    frequences = {}
+    frequencies = {}
 
     for token in tokens:
-        if token not in frequences:
-            frequences[token] = 0.0
-        frequences[token] += 1
+        if token not in frequencies:
+            frequencies[token] = 0.0
+        frequencies[token] += 1
 
     total_num = len(tokens)
 
-    for token in frequences:
-        frequences[token] = frequences[token] / total_num
-    return frequences
+    for token in frequencies:
+        frequencies[token] = frequencies[token] / total_num
+    return frequencies
 
 
 def get_top_n_words(freq_dict: dict[str, float], top_n: int) -> Sequence[str] | None:
@@ -351,15 +351,15 @@ def compare_profiles_by_mse(
 
     all_tokens = set(unknown_freq) | set(compare_freq)
 
-    unknown_frequences = []
-    compare_frequences = []
+    unknown_frequencies = []
+    compare_frequencies = []
 
     for token in all_tokens:
-        unknown_frequences.append(unknown_freq.get(token, 0.0))
-        compare_frequences.append(compare_freq.get(token, 0.0))
+        unknown_frequencies.append(unknown_freq.get(token, 0.0))
+        compare_frequencies.append(compare_freq.get(token, 0.0))
     return calculate_mse(
-        unknown_frequences,
-        compare_frequences
+        unknown_frequencies,
+        compare_frequencies,
     )
 
 
@@ -388,11 +388,11 @@ def detect_language_by_mse(
 
     mse_1 = compare_profiles_by_mse(
         unknown_profile,
-        profile_1
+        profile_1,
     )
     mse_2 = compare_profiles_by_mse(
         unknown_profile,
-        profile_2
+        profile_2,
     )
 
     if mse_1 is None or mse_2 is None:
