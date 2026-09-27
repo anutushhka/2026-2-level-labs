@@ -8,7 +8,10 @@ from main import (
     tokenize,
     remove_stop_words,
     calculate_frequencies,
-    get_top_n_words
+    get_top_n_words,
+    create_language_profile,
+    detect_language_by_top_n,
+    detect_language_by_mse
     )
 
 def main() -> None:
@@ -34,6 +37,27 @@ def main() -> None:
 
     print(top_7_words)
 
+    #creating language profiles
+    en_profile = create_language_profile("en", en_text, stopwords)
+    de_profile = create_language_profile("de", de_text, stopwords)
+    unknown_profile = create_language_profile("unknown", unknown_text, stopwords)
+
+    #detection with top-15
+    result = detect_language_by_top_n(
+    unknown_profile,
+    en_profile,
+    de_profile,
+    15,
+    )
+    print(result)
+
+    #detection with mse
+    result_mse = detect_language_by_mse(
+    unknown_profile,
+    en_profile,
+    de_profile,
+    )
+    print(result_mse)
 
 if __name__ == "__main__":
     main()
