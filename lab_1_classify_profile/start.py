@@ -57,7 +57,8 @@ def main() -> None:
         )
         print(result)
 
-        # detection with mse
+    # detection with mse
+    if en_profile is not None and de_profile is not None and unknown_profile is not None:
         result_mse = detect_language_by_mse(
             unknown_profile,
             en_profile,
