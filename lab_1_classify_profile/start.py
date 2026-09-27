@@ -11,7 +11,7 @@ from main import (
     get_top_n_words,
     create_language_profile,
     detect_language_by_top_n,
-    detect_language_by_mse
+    detect_language_by_mse,
 )
 
 
