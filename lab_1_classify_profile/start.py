@@ -4,7 +4,7 @@ Language detection starter.
 
 # pylint: disable=unused-variable, duplicate-code
 
-from main import (
+from lab_1_classify_profile.main import (
     tokenize,
     remove_stop_words,
     calculate_frequencies,
@@ -13,6 +13,9 @@ from main import (
     detect_language_by_top_n,
     detect_language_by_mse
     )
+
+if __name__ == "__main__":
+    main()
 
 def main() -> None:
     """
@@ -27,7 +30,7 @@ def main() -> None:
     with open("lab_1_classify_profile/assets/texts/en.txt", "r", encoding="utf-8") as file:
         en_text = file.read()
 
-    #demonstration of getting top-7 words
+    # demonstration of getting top-7 words
     tokens = tokenize(de_text)
     filtered_tokens = remove_stop_words(tokens, stopwords)
     freq_dict = calculate_frequencies(filtered_tokens)
@@ -35,12 +38,12 @@ def main() -> None:
 
     print(top_7_words)
 
-    #creating language profiles
+    # creating language profiles
     en_profile = create_language_profile("en", en_text, stopwords)
     de_profile = create_language_profile("de", de_text, stopwords)
     unknown_profile = create_language_profile("unknown", unknown_text, stopwords)
 
-    #detection with top-15
+    # detection with top-15
     result = detect_language_by_top_n(
     unknown_profile,
     en_profile,
@@ -49,7 +52,7 @@ def main() -> None:
     )
     print(result)
 
-    #detection with mse
+    # detection with mse
     result_mse = detect_language_by_mse(
     unknown_profile,
     en_profile,
@@ -57,6 +60,5 @@ def main() -> None:
     )
     print(result_mse)
 
-if __name__ == "__main__":
-    main()
+
 
