@@ -57,13 +57,13 @@ def main() -> None:
         )
         print(result)
 
-    # detection with mse
-    result_mse = detect_language_by_mse(
-        unknown_profile,
-        en_profile,
-        de_profile,
-    )
-    print(result_mse)
+        # detection with mse
+        result_mse = detect_language_by_mse(
+            unknown_profile,
+            en_profile,
+            de_profile,
+        )
+        print(result_mse)
 
 if __name__ == "__main__":
     main()
