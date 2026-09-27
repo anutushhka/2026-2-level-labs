@@ -312,6 +312,7 @@ def calculate_mse(predicted: Sequence[float], actual: Sequence[float]) -> float 
         or len(predicted) != len(actual)
     ):
         return None
+
     if not predicted:
         return 0.0
 
