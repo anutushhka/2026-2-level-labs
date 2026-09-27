@@ -6,7 +6,6 @@ Language detection
 
 # pylint:disable=unused-argument
 from typing import Sequence
-import json
 
 FreqDictType = dict[str, float]
 "Frequency dictionary. Contains pairs of token and its frequency."
@@ -90,7 +89,7 @@ def calculate_frequencies(tokens: Sequence[str]) -> dict[str, float] | None:
 
     for token in tokens:
         if token not in frequences:
-            frequences[token] = 0
+            frequences[token] = 0.0
         frequences[token] += 1
 
     total_num = len(tokens)
