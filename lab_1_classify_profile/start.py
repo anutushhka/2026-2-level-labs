@@ -31,13 +31,19 @@ def main() -> None:
 
     with open("lab_1_classify_profile/assets/texts/en.txt", "r", encoding="utf-8") as file:
         en_text = file.read()
+    result = None
 
     # demonstration of getting top-7 words
     tokens = tokenize(de_text)
+    cleaned_tokens = None
+    freq_dict = None
+
     if tokens is not None:
         cleaned_tokens = remove_stop_words(tokens, stopwords)
+
     if cleaned_tokens is not None:
         freq_dict = calculate_frequencies(cleaned_tokens)
+
     if freq_dict is not None:
         result = get_top_n_words(freq_dict, 7)
     print("Top-7 words:", result)
@@ -47,7 +53,7 @@ def main() -> None:
     en_profile = create_language_profile("en", en_text, stopwords)
     unknown_profile = create_language_profile("unknown", unknown_text, stopwords)
 
-    #detection with top-15
+    # detection with top-15
     if de_profile is not None and en_profile is not None and unknown_profile is not None:
         result = detect_language_by_top_n(unknown_profile, en_profile, de_profile, 15)
 
