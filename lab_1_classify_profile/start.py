@@ -35,14 +35,14 @@ def main() -> None:
 
     # demonstration of getting top-7 words
     tokens = tokenize(de_text)
-    cleaned_tokens = None
+    filtered_tokens = None
     freq_dict = None
 
     if tokens is not None:
-        cleaned_tokens = remove_stop_words(tokens, stopwords)
+        filtered_tokens = remove_stop_words(tokens, stopwords)
 
-    if cleaned_tokens is not None:
-        freq_dict = calculate_frequencies(cleaned_tokens)
+    if filtered_tokens is not None:
+        freq_dict = calculate_frequencies(filtered_tokens)
 
     if freq_dict is not None:
         result = get_top_n_words(freq_dict, 7)
@@ -57,7 +57,7 @@ def main() -> None:
     if de_profile is not None and en_profile is not None and unknown_profile is not None:
         result = detect_language_by_top_n(unknown_profile, en_profile, de_profile, 15)
 
-    print("Язык текста:", result)
+    print("Language of the text:", result)
 
     assert result, "Detection result is None"
 
@@ -68,7 +68,7 @@ def main() -> None:
             en_profile,
             de_profile,
         )
-        print("Язык текста (MSE):", result_mse)
+        print("Language of the text (MSE):", result_mse)
 
 
 if __name__ == "__main__":
