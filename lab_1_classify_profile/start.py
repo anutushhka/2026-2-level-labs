@@ -17,31 +17,17 @@ from lab_1_classify_profile.main import (
     tokenize,
 )
 
-from lab_1_classify_profile.main import (
-    calculate_frequencies,
-    create_language_profile,
-    detect_language_by_mse,
-    detect_language_by_top_n,
-    get_top_n_words,
-    remove_stop_words,
-    tokenize,
-)
-
 
 def main() -> None:
     """
     Launches an implementation.
     """
-
     with open("lab_1_classify_profile/assets/texts/de.txt", "r", encoding="utf-8") as file:
         de_text = file.read()
-
     with open("lab_1_classify_profile/assets/texts/unknown.txt", "r", encoding="utf-8") as file:
         unknown_text = file.read()
-
     with open("lab_1_classify_profile/assets/stopwords.txt", "r", encoding="utf-8") as file:
         stopwords = file.read().split("\n")
-
     with open("lab_1_classify_profile/assets/texts/en.txt", "r", encoding="utf-8") as file:
         en_text = file.read()
 
@@ -94,15 +80,6 @@ def main() -> None:
 
     assert result, "Detection result is None"
     return None
-
-    # detection with mse
-    if en_profile is not None and de_profile is not None and unknown_profile is not None:
-        result_mse = detect_language_by_mse(
-            unknown_profile,
-            en_profile,
-            de_profile,
-        )
-        print("Language of the text (MSE):", result_mse)
 
 
 if __name__ == "__main__":
