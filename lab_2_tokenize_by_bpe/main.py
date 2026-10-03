@@ -7,6 +7,7 @@ BPE and machine translation evaluation
 # pylint:disable=unused-argument
 from typing import Sequence
 
+print ("Start working")
 
 def prepare_word(
     raw_word: str, start_of_word: str | None, end_of_word: str | None
