@@ -7,7 +7,6 @@ BPE and machine translation evaluation
 # pylint:disable=unused-argument
 from typing import Sequence
 
-print ("Start working")
 
 def prepare_word(
     raw_word: str, start_of_word: str | None, end_of_word: str | None
@@ -25,6 +24,23 @@ def prepare_word(
 
     In case of corrupt input arguments, None is returned
     """
+    if not isinstance(raw_word, str):
+            return None
+    if start_of_word is not None and not isinstance(start_of_word, str):
+            return None
+    if end_of_word is not None and not isinstance(end_of_word, str):
+        return None
+
+    prepared_word = []
+
+    if start_of_word is not None:
+        prepared_word.append(start_of_word)
+    if raw_word is not None:
+        prepared_word.extend(raw_word)
+    if end_of_word is not None:
+        prepared_word.append(end_of_word)
+
+    return tuple(prepared_word)
 
 
 def collect_frequencies(
