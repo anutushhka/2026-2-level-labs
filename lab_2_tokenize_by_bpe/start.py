@@ -9,6 +9,7 @@ from lab_2_tokenize_by_bpe.main import (
     prepare_word,
 )
 
+
 def main() -> None:
     """
     Launches an implementation
