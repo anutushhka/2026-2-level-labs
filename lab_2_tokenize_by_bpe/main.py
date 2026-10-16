@@ -25,9 +25,9 @@ def prepare_word(
     In case of corrupt input arguments, None is returned
     """
     if not isinstance(raw_word, str):
-            return None
+        return None
     if start_of_word is not None and not isinstance(start_of_word, str):
-            return None
+        return None
     if end_of_word is not None and not isinstance(end_of_word, str):
         return None
 
@@ -35,8 +35,9 @@ def prepare_word(
 
     if start_of_word is not None:
         prepared_word.append(start_of_word)
-    if raw_word is not None:
-        prepared_word.extend(raw_word)
+
+    prepared_word.extend(raw_word)
+
     if end_of_word is not None:
         prepared_word.append(end_of_word)
 
@@ -70,15 +71,13 @@ def collect_frequencies(
 
     frequencies = {}
 
-    split_text = text.split()
+    for raw_word in text.split():
+        prepared_word = prepare_word(raw_word, start_of_word, end_of_word)
 
-    for raw_word in split_text:
-    prepared_word = prepare_word(raw_word, start_of_word, end_of_word)
+        if prepared_word is None:
+            return None
 
-    if prepared_word is None:
-        return None
-
-    frequencies[prepared_word] = frequencies.get(prepared_word, 0) + 1
+        frequencies[prepared_word] = frequencies.get(prepared_word, 0) + 1
 
     return frequencies
 
