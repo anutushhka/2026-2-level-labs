@@ -73,16 +73,14 @@ def collect_frequencies(
     split_text = text.split()
 
     for raw_word in split_text:
-        prepared_word = prepare_word(raw_word, start_of_word, end_of_word)
-        if prepared_word is None:
-            return None
-        if prepared_word not in frequencies:
-            frequencies[prepared_word] = 1
-        else:
-            frequencies[prepared_word] += 1
+    prepared_word = prepare_word(raw_word, start_of_word, end_of_word)
+
+    if prepared_word is None:
+        return None
+
+    frequencies[prepared_word] = frequencies.get(prepared_word, 0) + 1
 
     return frequencies
-
 
 
 def count_tokens_pairs(
