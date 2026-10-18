@@ -142,6 +142,9 @@ def merge_tokens(
     if not all(isinstance(token, str) for token in pair):
         return None
 
+
+    merged_frequencies = {}
+
     for word, frequency in word_frequencies.items():
         if not isinstance(word, tuple):
             return None
@@ -150,10 +153,8 @@ def merge_tokens(
         if not isinstance(frequency, int) or isinstance(frequency, bool):
             return None
 
-    merged_frequencies = {}
-
-    for word, frequency in word_frequencies.items():
         merged_word = []
+
         skip_next_token = False
 
         for i, token in enumerate(word):
@@ -200,11 +201,11 @@ def train(
     if num_merges < 0:
         return None
 
-    pairs = count_tokens_pairs(word_frequencies)
-    if pairs is None:
-        return None
 
-    for _ in range(num_merges):
+    for i in range(num_merges):
+        pairs = count_tokens_pairs(word_frequencies)
+        if pairs is None:
+            return None
         if not pairs:
             break
 
@@ -214,15 +215,11 @@ def train(
                 -pairs[pair],
                 -len(pair[0] + pair[1]),
                 pair[0] + pair[1],
-            ),
-        )
+                ),
+                )
 
         word_frequencies = merge_tokens(word_frequencies, best_pair)
         if word_frequencies is None:
-            return None
-
-        pairs = count_tokens_pairs(word_frequencies)
-        if pairs is None:
             return None
 
     return word_frequencies
@@ -271,12 +268,10 @@ def get_vocabulary(
 
     sorted_tokens = sorted(tokens, key=lambda token: (-len(token), token))
 
-    vocabulary = {}
-
-    for token_id, token in enumerate(sorted_tokens):
-        vocabulary[token] = token_id
-
-    return vocabulary
+    return {
+        token: token_id
+        for token_id, token in enumerate(sorted_tokens)
+        }
 
 
 def decode(
@@ -317,24 +312,30 @@ def decode(
         if not isinstance(token_id, int) or isinstance(token_id, bool):
             return None
 
-    for token_id in encoded_text:
+    reversed_vocabulary = {}
+    for token, token_id in vocabulary.items():
+        if not isinstance(token, str):
+            return None
         if not isinstance(token_id, int) or isinstance(token_id, bool):
             return None
 
-    reversed_vocabulary = {
-        token_id: token for token, token_id in vocabulary.items()
-    }
+        reversed_vocabulary[token_id] = token
 
     decoded_tokens = []
 
     for token_id in encoded_text:
-        token = reversed_vocabulary.get(token_id, "<unk>")
+        if not isinstance(token_id, int) or isinstance(token_id, bool):
+            return None
 
-        if end_of_word_token is not None:
-            token = token.replace(end_of_word_token, " ")
+        token = reversed_vocabulary.get(token_id, "<unk>")
         decoded_tokens.append(token)
 
-    return "".join(decoded_tokens)
+    decoded_text = "".join(decoded_tokens)
+
+    if end_of_word_token is not None:
+        decoded_text = decoded_text.replace(end_of_word_token, " ")
+
+    return decoded_text
 
 
 def tokenize_word(
