@@ -23,12 +23,6 @@ class TextProcessor:
         Args:
             end_of_word_token (str): A token denoting word boundary
         """
-        if (
-            not isinstance(end_of_word_token, str)
-            or len(end_of_word_token) != 1
-        ):
-            return
-
         self._end_of_word_token = end_of_word_token
         self._storage = {end_of_word_token: 0}
 
@@ -49,7 +43,7 @@ class TextProcessor:
         In case of corrupt input arguments, None is returned.
         In case any of methods used return None, None is returned.
         """
-        if not isinstance(text, str):
+        if not isinstance(text, str) or text is None:
             return None
 
         tokens = []
@@ -111,7 +105,7 @@ class TextProcessor:
 
         In case of corrupt input arguments or arguments not included in storage, None is returned
         """
-        if not isinstance(element_id, int) or isinstance(element_id, bool):
+        if element_id is None or not isinstance(element_id, int) or isinstance(element_id, bool):
             return None
 
         for el, el_id in self._storage.items():
@@ -273,18 +267,15 @@ class TextProcessor:
             if not isinstance(symb, str):
                 return None
 
-        text = ""
-        for symb in decoded_corpus:
-            if symb == self._end_of_word_token:
-                text += " "
-            else:
-                text += symb
-        text = text.strip()
+        text = "".join(
+            " " if symb == self._end_of_word_token else symb
+            for symb in decoded_corpus
+        ).strip()
 
         if not text:
             return None
 
-        return text[0].upper() + text[1:] + "."
+        return text.capitalize() + "."
 
 
 class WordProcessor(TextProcessor):
