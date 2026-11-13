@@ -29,6 +29,13 @@ def main() -> None:
     decoded_text = text_processor.decode(encoded_corpus)
     assert decoded_text is not None
 
+    result = (
+        tokens is not None
+        and encoded_corpus is not None
+        and decoded_text is not None
+    )
+    assert result
+
     print("Tokens:", tokens[:30])
     print("Encoded corpus:", encoded_corpus[:30])
     print("Decoded text:", decoded_text[:200])
