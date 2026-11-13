@@ -270,7 +270,9 @@ class TextProcessor:
         text = "".join(
             " " if symb == self._end_of_word_token else symb
             for symb in decoded_corpus
-        ).strip()
+        )
+
+        text = " ".join(text.split())
 
         if not text:
             return None
