@@ -550,10 +550,7 @@ class GreedyTextGenerator:
         for _ in range(seq_len):
             next_tokens = self._model.generate_next_token(sequence)
 
-            if next_tokens is None:
-                return None
-
-            if not next_tokens:
+            if next_tokens is None or not next_tokens:
                 break
 
             next_token = max(
