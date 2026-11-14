@@ -267,12 +267,9 @@ class TextProcessor:
             if not isinstance(symb, str):
                 return None
 
-        text = "".join(
-            " " if symb == self._end_of_word_token else symb
-            for symb in decoded_corpus
-        )
-
-        text = " ".join(text.split())
+        text = "".join(decoded_corpus).replace(
+            self._end_of_word_token, " "
+            ).strip()
 
         if not text:
             return None
@@ -400,21 +397,13 @@ class NGramLanguageModel:
         for n_gram in n_grams:
             context = n_gram[:-1]
 
-            if n_gram not in n_gram_counts:
-                n_gram_counts[n_gram] = 0
-            n_gram_counts[n_gram] += 1
-
-            if context not in context_counts:
-                context_counts[context] = 0
-            context_counts[context] += 1
+            n_gram_counts[n_gram] = n_gram_counts.get(n_gram, 0) + 1
+            context_counts[context] = context_counts.get(context, 0) + 1
 
         self._n_gram_frequencies = {}
 
         for n_gram in n_gram_counts:
-            context = n_gram[:-1]
-
-            probability = n_gram_counts[n_gram] / context_counts[context]
-
+            probability = n_gram_counts[n_gram] / context_counts[n_gram[:-1]]
             self._n_gram_frequencies[n_gram] = probability
 
         return True
@@ -433,12 +422,6 @@ class NGramLanguageModel:
         In case of corrupt input arguments, None is returned
         """
         if not isinstance(sequence, tuple):
-            return None
-
-        if not isinstance(self.__n_gram_size, int) or isinstance(self.__n_gram_size, bool):
-            return None
-
-        if self.__n_gram_size < 2:
             return None
 
         if len(sequence) < self.__n_gram_size - 1:
