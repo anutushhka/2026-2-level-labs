@@ -52,6 +52,8 @@ class TextProcessor:
         for symb in text:
             if symb.isalpha():
                 word.append(symb.lower())
+            elif symb == "-":
+                continue
             else:
                 if word:
                     tokens.extend(word)
