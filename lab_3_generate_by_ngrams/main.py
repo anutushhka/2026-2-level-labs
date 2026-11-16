@@ -427,7 +427,6 @@ class NGramLanguageModel:
             return
         self._n_gram_frequencies = frequencies
 
-
     def build(self) -> bool:
         """
         Fill attribute `_n_gram_frequencies` from encoded corpus.
